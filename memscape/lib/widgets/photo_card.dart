@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:memscape/core/themes.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:memscape/screens/home/public_profile_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:saver_gallery/saver_gallery.dart';
 import '../models/photo_model.dart';
@@ -179,10 +179,34 @@ class _PhotoCardState extends State<PhotoCard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            username,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          // Text(
+                          //   username,
+                          //   style: const TextStyle(fontWeight: FontWeight.bold),
+                          // ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (_) => PublicProfileScreen(
+                                        uid: widget.photo.uid,
+                                      ),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              username,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                color:
+                                    Colors
+                                        .blue, // Optional: visual cue it's clickable
+                              ),
+                            ),
                           ),
+
                           if (widget.photo.location.isNotEmpty)
                             Text(
                               widget.photo.location,

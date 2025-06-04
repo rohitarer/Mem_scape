@@ -21,19 +21,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void login() async {
     setState(() => isLoading = true);
     try {
-      await ref.read(loginProvider({
-        'email': _emailController.text.trim(),
-        'password': _passwordController.text.trim(),
-      }).future);
+      await ref.read(
+        loginProvider({
+          'email': _emailController.text.trim(),
+          'password': _passwordController.text.trim(),
+        }).future,
+      );
 
       // Navigate to home
       if (context.mounted) {
         Navigator.pushReplacementNamed(context, '/home');
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
       setState(() => isLoading = false);
     }
@@ -69,13 +71,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const SizedBox(height: 16),
             TextButton(
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (_) => const SignupScreen()),
                 );
               },
               child: const Text("Don't have an account? Sign up"),
-            )
+            ),
           ],
         ),
       ),

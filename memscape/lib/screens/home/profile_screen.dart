@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:memscape/screens/home/edit_profile_screen.dart';
 import 'package:memscape/screens/home/followers_list_screen.dart';
 import 'package:memscape/screens/home/following_feed_screen.dart';
+import 'package:memscape/screens/home/memories_view_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -38,11 +39,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
               .doc(user.uid)
               .get();
       if (doc.exists) {
+        // final data = doc.data()!;
+        // name = data['name'] ?? '';
+        // bio = data['bio'] ?? '';
+        // imagePath = data['profileImagePath'];
+        // photoRefs = List<String>.from(data['photoRefs'] ?? []);
+
+        // if (imagePath != null && imagePath!.isNotEmpty) {
+        //   final snapshot = await realtimeDB.ref(imagePath!).get();
+        //   if (snapshot.exists) {
+        //     imageBase64 = snapshot.value as String;
+        //   }
+        // }
         final data = doc.data()!;
         name = data['name'] ?? '';
         bio = data['bio'] ?? '';
         imagePath = data['profileImagePath'];
         photoRefs = List<String>.from(data['photoRefs'] ?? []);
+        photoRefs = photoRefs.reversed.toList(); // 👈 latest first
 
         if (imagePath != null && imagePath!.isNotEmpty) {
           final snapshot = await realtimeDB.ref(imagePath!).get();
@@ -68,6 +82,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 as ImageProvider;
 
     return Scaffold(
+      // appBar: AppBar(
+      //   title: const Text("My Profile"),
+      //   actions: [
+      //     IconButton(
+      //       icon: const Icon(Icons.edit),
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(builder: (_) => const EditProfileScreen()),
+      //         );
+      //       },
+      //     ),
+      //   ],
+      // ),
       appBar: AppBar(
         title: const Text("My Profile"),
         actions: [
@@ -80,8 +108,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             },
           ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'logout') {
+                showDialog(
+                  context: context,
+                  builder:
+                      (context) => AlertDialog(
+                        title: const Text("Confirm Logout"),
+                        content: const Text(
+                          "Are you sure you want to log out?",
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.of(
+                                context,
+                              ).popUntil((route) => route.isFirst);
+                            },
+                            child: const Text("Logout"),
+                          ),
+                        ],
+                      ),
+                );
+              }
+            },
+            itemBuilder:
+                (context) => [
+                  const PopupMenuItem(value: 'logout', child: Text('Logout')),
+                ],
+          ),
         ],
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -133,6 +197,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             const SizedBox(height: 10),
+
+            // GestureDetector(
+            //   onTap: () {
+            //     // debugPrint("🟢 Opening MemoriesViewScreen at index $index");
+
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (_) => MemoriesViewScreen(photo: photo),
+            //       ),
+            //     );
+            //   },
+
+            //   child: _buildPhotoGrid(),
+            // ),
             _buildPhotoGrid(),
           ],
         ),
@@ -187,11 +266,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }
 
               final base64String = snapshot.data!.value as String;
-              final image = MemoryImage(base64Decode(base64String));
+              final imageBytes = base64Decode(base64String);
 
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Image(image: image, fit: BoxFit.cover),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (_) => MemoriesViewScreen(photoBase64: base64String),
+                    ),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image.memory(imageBytes, fit: BoxFit.cover),
+                ),
               );
             },
           );
@@ -199,4 +289,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  // Widget _buildPhotoGrid() {
+  //   if (photoRefs.isEmpty) {
+  //     return const Padding(
+  //       padding: EdgeInsets.all(20),
+  //       child: Text("No posts yet."),
+  //     );
+  //   }
+
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 16),
+  //     child: GridView.builder(
+  //       shrinkWrap: true,
+  //       physics: const NeverScrollableScrollPhysics(),
+  //       itemCount: photoRefs.length,
+  //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //         crossAxisCount: 3,
+  //         mainAxisSpacing: 6,
+  //         crossAxisSpacing: 6,
+  //       ),
+  //       itemBuilder: (context, index) {
+  //         final refPath = "images/${photoRefs[index]}";
+  //         return FutureBuilder<DataSnapshot>(
+  //           future: realtimeDB.ref(refPath).get(),
+  //           builder: (context, snapshot) {
+  //             if (snapshot.connectionState == ConnectionState.waiting) {
+  //               return const Center(
+  //                 child: CircularProgressIndicator(strokeWidth: 1),
+  //               );
+  //             }
+
+  //             if (!snapshot.hasData || !snapshot.data!.exists) {
+  //               return const Icon(Icons.broken_image);
+  //             }
+
+  //             final base64String = snapshot.data!.value as String;
+  //             final image = MemoryImage(base64Decode(base64String));
+
+  //             return ClipRRect(
+  //               borderRadius: BorderRadius.circular(6),
+  //               child: Image(image: image, fit: BoxFit.cover),
+  //             );
+  //           },
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 }
