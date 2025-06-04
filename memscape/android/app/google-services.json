@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1058293704983",
+    "firebase_url": "https://memscape-d6348-default-rtdb.firebaseio.com",
+    "project_id": "memscape-d6348",
+    "storage_bucket": "memscape-d6348.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058293704983:android:f406f596bc3e8354686f52",
+        "android_client_info": {
+          "package_name": "com.example.memscape"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_-pQRZMP7-UVoYDdkV3oX01yqzvXyeN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
