@@ -1,4 +1,4 @@
-package com.example.memscape
+package com.rohitarer.memscape
 
 import io.flutter.embedding.android.FlutterActivity
 
