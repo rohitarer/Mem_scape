@@ -83,9 +83,19 @@ class _PhotoCardState extends State<PhotoCard> {
       future: Future.wait([_imageFuture, _userFuture]),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const Padding(
-            padding: EdgeInsets.all(16),
-            child: Center(child: CircularProgressIndicator()),
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+          return Container(
+            height: 300,
+            width: double.infinity,
+            color: isDark ? Colors.grey[900] : Colors.grey[300],
+            alignment: Alignment.center,
+            child: Text(
+              "Loading...",
+              style: TextStyle(
+                color: isDark ? Colors.white70 : Colors.black54,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
           );
         }
 
