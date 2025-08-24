@@ -14,12 +14,12 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.rohitarer.memscape"
+    namespace = "com.rohitarer00.memscape"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973" // ✅ Use latest NDK
 
     defaultConfig {
-        applicationId = "com.rohitarer.memscape"
+        applicationId = "com.rohitarer00.memscape"
         minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -82,7 +82,7 @@ dependencies {
 // }
 
 // android {
-//     namespace = "com.rohitarer.memscape"
+//     namespace = "com.rohitarer00.memscape"
 //     compileSdk = flutter.compileSdkVersion
 //     ndkVersion = flutter.ndkVersion
 
@@ -96,7 +96,7 @@ dependencies {
 //     }
 
 //     defaultConfig {
-//         applicationId = "com.rohitarer.memscape"
+//         applicationId = "com.rohitarer00.memscape"
 //         minSdk = 23
 //         targetSdk = flutter.targetSdkVersion
 //         versionCode = flutter.versionCode
