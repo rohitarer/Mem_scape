@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as fs;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -268,6 +269,34 @@ class FirestoreService {
       return snapshot.exists ? snapshot.value as String : null;
     } catch (e) {
       throw Exception("❌ Failed to fetch base64 image: $e");
+    }
+  }
+
+  /// ✅ Wrapper with a null/empty guard (this is what your screen calls)
+  Future<String?> fetchProfileBase64(String? imagePath) async {
+    if (imagePath == null || imagePath.isEmpty) return null;
+    return await fetchImageBase64(imagePath);
+  }
+
+  Future<List<PhotoModel>> fetchUserPhotosForViewer({
+    required String ownerUid,
+    required String viewerUid,
+  }) async {
+    try {
+      fs.Query<Map<String, dynamic>> q = _firestore
+          .collection(photosCollection)
+          .where('uid', isEqualTo: ownerUid);
+
+      if (viewerUid != ownerUid) {
+        q = q.where('isPublic', isEqualTo: true);
+      }
+
+      final snapshot = await q.orderBy('timestamp', descending: true).get();
+      return snapshot.docs
+          .map((doc) => PhotoModel.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw Exception("❌ Firestore fetchUserPhotosForViewer failed: $e");
     }
   }
 
