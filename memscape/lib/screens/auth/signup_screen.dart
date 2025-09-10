@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memscape/screens/auth/login_screen.dart';
+import 'package:memscape/widgets/custom_textfield.dart';
 import '../../providers/auth_provider.dart';
-import '../../widgets/custom_textfield.dart';
 import '../../widgets/primary_button.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {

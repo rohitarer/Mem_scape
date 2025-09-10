@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId = "com.rohitarer00.memscape"
-        minSdk = 23
+        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

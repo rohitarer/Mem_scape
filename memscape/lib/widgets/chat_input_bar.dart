@@ -77,7 +77,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceVariant,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -113,7 +113,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
                       filled: true,
                       fillColor: Theme.of(
                         context,
-                      ).colorScheme.surfaceVariant.withOpacity(.6),
+                      ).colorScheme.surfaceContainerHighest.withOpacity(.6),
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 14,
                         vertical: 12,

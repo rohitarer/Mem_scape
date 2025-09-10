@@ -565,7 +565,7 @@ class _PhotoGridTabState extends State<_PhotoGridTab>
               return Container(
                 color: Theme.of(
                   context,
-                ).colorScheme.surfaceVariant.withOpacity(0.4),
+                ).colorScheme.surfaceContainerHighest.withOpacity(0.4),
                 child: const Center(
                   child: SizedBox(
                     width: 16,

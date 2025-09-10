@@ -29,7 +29,7 @@ class MessageBubble extends StatelessWidget {
     final bubbleColor =
         isMine
             ? Theme.of(context).colorScheme.primaryContainer
-            : Theme.of(context).colorScheme.surfaceVariant;
+            : Theme.of(context).colorScheme.surfaceContainerHighest;
 
     final align = isMine ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     final rowAlign = isMine ? MainAxisAlignment.end : MainAxisAlignment.start;

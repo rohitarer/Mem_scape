@@ -14,6 +14,7 @@ class PhotoModel {
   final bool isPublic;
   final List<String> likes;
   final List<Map<String, dynamic>> comments;
+  final List<Map<String, dynamic>>? media; // NEW: list of MediaItem.toMap()
   final String? id;
 
   /// 🧠 In-memory decoded image cache (not saved to DB)
@@ -34,6 +35,7 @@ class PhotoModel {
     this.likes = const [],
     this.comments = const [],
     this.decodedImage,
+    this.media,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,6 +52,7 @@ class PhotoModel {
       'isPublic': isPublic,
       'likes': likes,
       'comments': comments,
+      'media': media,
     };
   }
 
@@ -70,6 +73,10 @@ class PhotoModel {
       isPublic: map['isPublic'] ?? true,
       likes: List<String>.from(map['likes'] ?? []),
       comments: List<Map<String, dynamic>>.from(map['comments'] ?? []),
+      media:
+          map['media'] != null
+              ? List<Map<String, dynamic>>.from(map['media'])
+              : null,
     );
   }
 
@@ -97,6 +104,7 @@ class PhotoModel {
     List<String>? likes,
     List<Map<String, dynamic>>? comments,
     Uint8List? decodedImage,
+    List<Map<String, dynamic>>? media,
   }) {
     return PhotoModel(
       id: id ?? this.id,
@@ -113,6 +121,7 @@ class PhotoModel {
       likes: likes ?? this.likes,
       comments: comments ?? this.comments,
       decodedImage: decodedImage ?? this.decodedImage,
+      media: media ?? this.media,
     );
   }
 }

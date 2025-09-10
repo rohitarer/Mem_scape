@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:memscape/widgets/custom_textfield.dart';
 import '../../providers/auth_provider.dart';
-import '../../widgets/custom_textfield.dart';
 import '../../widgets/primary_button.dart';
 import 'signup_screen.dart';
 

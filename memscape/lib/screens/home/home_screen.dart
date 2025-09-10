@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'explore_feed_screen.dart';
 import 'explore_map_screen.dart';
-import 'upload_photo_screen.dart';
+import 'upload/upload_photo_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -28,7 +28,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   final List<Widget> screens = const [
     ExploreFeedScreen(),
     ExploreMapScreen(),
-    UploadPhotoScreen(),
+    UploadMemoryScreen(),
     ProfileScreen(),
   ];
 

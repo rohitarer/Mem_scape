@@ -199,7 +199,6 @@ class _PhotoPane extends StatefulWidget {
   final void Function(Uint8List? bytes)? onBytesReady;
 
   const _PhotoPane({
-    super.key,
     required this.index,
     required this.imagePath,
     required this.photoId,

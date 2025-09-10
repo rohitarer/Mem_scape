@@ -19,7 +19,9 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+2
 
 environment:
-  sdk: ^3.8.0-219.0.dev
+  # sdk: ^3.8.0-219.0.dev
+  sdk: ">=3.2.0 <4.0.0"
+
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -57,6 +59,13 @@ dependencies:
   saver_gallery: ^4.0.1
   path_provider: ^2.1.5
   device_info_plus: ^11.4.0
+  camera: ^0.11.2
+  path: ^1.9.1
+  image: ^4.5.4
+  google_mlkit_face_detection: ^0.13.1
+  google_mlkit_commons: ^0.11.0
+  zego_uikit_prebuilt_call: ^4.18.3
+  zego_uikit_signaling_plugin: ^2.8.17
 
 dev_dependencies:
   flutter_test:
